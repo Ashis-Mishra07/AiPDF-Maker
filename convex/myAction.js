@@ -10,6 +10,9 @@ export const ingest = action({
     fileId: v.string(),
   },
   handler: async (ctx, args) => {
+
+    console.log("Google API Key being used:", process.env.GOOGLE_API_KEY);
+
       const splitTextArray = Array.isArray(args.splitText)
         ? args.splitText
         : [args.splitText];
@@ -18,7 +21,7 @@ export const ingest = action({
         splitTextArray,
         args.fileId,
         new GoogleGenerativeAIEmbeddings({
-          apiKey: process.env.GEMINI_API_KEY,
+          apiKey: "AIzaSyBdcxo7HLHK6hkXKlWFdVDoTEKd8aGvuwA",
           model: "text-embedding-004",
           taskType: TaskType.RETRIEVAL_DOCUMENT,
           title: "Document title",
@@ -26,5 +29,29 @@ export const ingest = action({
         { ctx }
       );
       return "Ingestion completed successfully.";
+  },
+});
+
+export const search = action({
+  args: {
+    query: v.string(),
+    fileId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const vectorStore = new ConvexVectorStore(
+      new GoogleGenerativeAIEmbeddings({
+        apiKey: "AIzaSyBdcxo7HLHK6hkXKlWFdVDoTEKd8aGvuwA",
+        model: "text-embedding-004",
+        taskType: TaskType.RETRIEVAL_DOCUMENT,
+        title: "Document title",
+      }),
+      { ctx }
+    );
+
+    const resultOne = (await vectorStore.similaritySearch(args.query, 1))
+    .filter(q=>q.metadata.fileId === args.fileId);
+    console.log(resultOne);
+
+    return JSON.stringify(resultOne);
   },
 });

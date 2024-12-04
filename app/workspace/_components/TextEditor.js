@@ -14,7 +14,8 @@ function TextEditor() {
     ],
     editorProps: {
       attributes: {
-        class: "focus:outline-none h-screen p-5 ",
+        class:
+          "focus:outline-none h-screen p-5 ",
       },
     },
   });
