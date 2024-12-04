@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function UpgradePlan() {
@@ -103,11 +104,11 @@ function UpgradePlan() {
               
             </ul>
 
-            <a
-              href="#"
+            <Link
+              href="/dashboard/payment"
               className="mt-8 block rounded-full border border-indigo-600 bg-indigo-600 px-12 py-3 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:ring-1 hover:ring-indigo-700 focus:outline-none focus:ring active:text-indigo-500">
               Get Started
-            </a>
+            </Link>
           </div>
 
           <div className="rounded-2xl border border-indigo-600 p-6 shadow-sm ring-1 ring-indigo-600 sm:order-last sm:px-8 lg:p-12">
@@ -239,11 +240,11 @@ function UpgradePlan() {
               </li>
             </ul>
 
-            <a
-              href="#"
+            <Link
+              href="/dashboard/payment"
               className="mt-8 block rounded-full border border-indigo-600 bg-indigo-600 px-12 py-3 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:ring-1 hover:ring-indigo-700 focus:outline-none focus:ring active:text-indigo-500">
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       </div>
