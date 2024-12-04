@@ -18,6 +18,7 @@ import { Loader2Icon } from 'lucide-react';
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 function UploadPdfDialog({children}) {
 
@@ -69,6 +70,8 @@ function UploadPdfDialog({children}) {
       
       setLoading(false);
       setOpen(false);
+
+      toast('File is ready !');
       
     }
 

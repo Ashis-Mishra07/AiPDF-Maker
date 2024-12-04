@@ -1,15 +1,25 @@
 import { chatSession } from '@/configs/AIModel';
 import { api } from '@/convex/_generated/api';
-import { useAction } from 'convex/react';
+import { useUser } from '@clerk/nextjs';
+import { useAction, useMutation } from 'convex/react';
 import { AlignCenter, AlignLeft, AlignRight, Bold, Heading1, Heading2, Heading2Icon, Heading3, Highlighter, Italic, MoveLeft, MoveRight, Pointer, Redo, Sparkles, Strikethrough, Subscript, Superscript, Underline, Undo } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React from 'react'
+import { toast } from 'sonner';
+// import Underline from "@tiptap/extension-underline";
+// import Highlight from "@tiptap/extension-highlight";
+
+
 
 function EditorExtension({editor}) {
     const { fileId } = useParams();
 
     const SearchAi = useAction(api.myAction.search);
+    const saveNotes = useMutation(api.notes.addNotes);
+    const {user} = useUser();
+
     const onAiClick = async() => {
+      toast("AI is getting your answer ...");
         const selectedText = editor.state.doc.textBetween(
             editor.state.selection.from, 
             editor.state.selection.to,
@@ -40,7 +50,7 @@ function EditorExtension({editor}) {
 
           Output:
           Please return only the HTML-formatted answer, without additional comments or explanations ,
-           and do not repeat the question again . Give me short answer in 2-3 lines and do not give the bold heading .
+           and do not repeat the question again . Give me short answer in 2-3 lines and do not give the bold heading and highlight the major points in yellow color.
           `;
 
           const AiModelResult = await chatSession.sendMessage(PROMPT);
@@ -55,6 +65,12 @@ function EditorExtension({editor}) {
           editor.commands.setContent(
             AllText + "<p><strong>Answer:</strong>" + FinalAns + "</p>"
           );
+
+          saveNotes({
+            notes:editor.getHTML(),
+            fileId:fileId,
+            createdBy:user?.primaryEmailAddress?.emailAddress
+          })
           
     }
 
@@ -62,14 +78,15 @@ function EditorExtension({editor}) {
     editor && (
       <div className="p-5 ">
         <div className="control-group ">
-          <div className="button-group flex gap-4 text-2xl">
+          <div className="button-group flex gap-5 text-2xl">
             <button
               onClick={() =>
                 editor.chain().focus().toggleHeading({ level: 1 }).run()
               }
               className={
                 editor.isActive("heading", { level: 1 }) ? "is-active" : ""
-              }>
+              }
+              >
               <Heading1 />
             </button>
             <button
