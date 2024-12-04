@@ -2,14 +2,10 @@ import { chatSession } from '@/configs/AIModel';
 import { api } from '@/convex/_generated/api';
 import { useUser } from '@clerk/nextjs';
 import { useAction, useMutation } from 'convex/react';
-import { AlignCenter, AlignLeft, AlignRight, Bold, Heading1, Heading2, Heading2Icon, Heading3, Highlighter, Italic, MoveLeft, MoveRight, Pointer, Redo, Sparkles, Strikethrough, Subscript, Superscript, Underline, Undo } from 'lucide-react';
+import { AlignCenter, AlignLeft, AlignRight, Bold, Heading1, Heading2, Heading3, Highlighter, Italic, Redo, Sparkles, Strikethrough, Subscript, Superscript, Underline, Undo } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React from 'react'
 import { toast } from 'sonner';
-// import Underline from "@tiptap/extension-underline";
-// import Highlight from "@tiptap/extension-highlight";
-
-
 
 function EditorExtension({editor}) {
     const { fileId } = useParams();
@@ -25,7 +21,6 @@ function EditorExtension({editor}) {
             editor.state.selection.to,
             ' '
         );
-        // console.log("selected text" , selectedText);
         
         const result = await SearchAi({
           query: selectedText,
@@ -118,46 +113,46 @@ function EditorExtension({editor}) {
               <Italic />
             </button>
             <button
-              onClick={() => editor.chain().focus().toggleUnderline().run()}
+              // onClick={() => editor.chain().focus().toggleUnderline().run()}
               className={editor.isActive("underline") ? "is-active" : ""}>
               <Underline />
             </button>
             <button
-              onClick={() => editor.chain().focus().toggleStrike().run()}
+              // onClick={() => editor.chain().focus().toggleStrike().run()}
               className={editor.isActive("strike") ? "is-active" : ""}>
               <Strikethrough />
             </button>
             <button
-              onClick={() => editor.chain().focus().setTextAlign("left").run()}
+              // onClick={() => editor.chain().focus().setTextAlign("left").run()}
               className={
                 editor.isActive({ textAlign: "left" }) ? "is-active" : ""
               }>
               <AlignLeft />
             </button>
             <button
-              onClick={() =>
-                editor.chain().focus().setTextAlign("center").run()
-              }
+              // onClick={() =>
+              //   editor.chain().focus().setTextAlign("center").run()
+              // }
               className={
                 editor.isActive({ textAlign: "center" }) ? "is-active" : ""
               }>
               <AlignCenter />
             </button>
             <button
-              onClick={() => editor.chain().focus().setTextAlign("right").run()}
+              // onClick={() => editor.chain().focus().setTextAlign("right").run()}
               className={
                 editor.isActive({ textAlign: "right" }) ? "is-active" : ""
               }>
               <AlignRight />
             </button>
             <button
-              onClick={() =>
-                editor
-                  .chain()
-                  .focus()
-                  .toggleHighlight({ color: "#ffc078" })
-                  .run()
-              }
+              // onClick={() =>
+              //   editor
+              //     .chain()
+              //     .focus()
+              //     .toggleHighlight({ color: "#ffc078" })
+              //     .run()
+              // }
               className={
                 editor.isActive("highlight", { color: "#ffc078" })
                   ? "is-active"
@@ -166,12 +161,12 @@ function EditorExtension({editor}) {
               <Highlighter />
             </button>
             <button
-              onClick={() => editor.chain().focus().toggleSuperscript().run()}
+              // onClick={() => editor.chain().focus().toggleSuperscript().run()}
               className={editor.isActive("superscript") ? "is-active" : ""}>
               <Superscript />
             </button>
             <button
-              onClick={() => editor.chain().focus().toggleSubscript().run()}
+              // onClick={() => editor.chain().focus().toggleSubscript().run()}
               className={editor.isActive("subscript") ? "is-active" : ""}>
               <Subscript />
             </button>
